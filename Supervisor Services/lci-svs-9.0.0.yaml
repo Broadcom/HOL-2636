@@ -9,7 +9,7 @@ spec:
     spec:
       fetch:
       - imgpkgBundle:
-          image: projects.packages.broadcom.com/vsphere/iaas/lci-service/9.0.0-beta/lci-service:9.0.0-8594cb6b
+          image: projects.packages.broadcom.com/vsphere/iaas/lci-service/9.0.0/lci-service:9.0.0-8594cb6b
       template:
       - ytt:
           paths:
