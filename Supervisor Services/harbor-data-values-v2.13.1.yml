@@ -11,14 +11,17 @@ tlsCertificate:
 #! Use nginx and LoadBalancer service to expose Harbor's endpoints when it's true.  This requires a loadBlalancer provider installed on Kubernetes cluster.
 #! enableNginxLoadBalancer and enableContourHttpProxy can't be true at the same time.
 #! When they are both set to false an Ingress will be created to expose Harbor's endpoints
-enableNginxLoadBalancer: false
+enableNginxLoadBalancer: true
 
 #! Use contour http proxy to expose Harbor's endpoints when it's true, enableNginxLoadBalancer and enableContourHttpProxy
 #! can't be true at the same time.  When they are both set to false an Ingress will be created to expose Harbor's endpoints
-enableContourHttpProxy: true
+enableContourHttpProxy: false
+
+# This should always set to true for Supervisor service
+createNetworkPolicy: true
 
 #! [Required] The initial password of Harbor admin.
-harborAdminPassword: VMware123!
+harborAdminPassword: 'VMware123!'
 
 #! [Required] The secret key used for encryption. Must be a string of 16 chars.
 secretKey: 0123456789ABCDEF
@@ -29,24 +32,24 @@ database:
   type: internal
   #! [Required] The initial password of the internal postgres database.
   #! if external database is used, please fill the external.password
-  password: VMware1!
+  password: 'VMware123!'
 
 core:
   replicas: 1
   #! [Required] Secret is used when core server communicates with other components.
-  secret: VMware1!
+  secret: 'VMware123!'
   #! [Required] The XSRF key. Must be a string of 32 chars.
   xsrfKey: 0123456789ABCDEF0123456789ABCDEF
 jobservice:
   replicas: 1
   #! [Required] Secret is used when job service communicates with other components.
-  secret: VMware1!
+  secret: 'VMware123!'
 registry:
   replicas: 1
   #! [Required] Secret is used to secure the upload state from client
   #! and registry storage backend.
   #! See: https://github.com/docker/distribution/blob/master/docs/configuration.md#http
-  secret: VMware1!
+  secret: 'VMware123!'
 
 #! The persistence is always enabled and a default StorageClass
 #! is needed in the k8s cluster to provision volumes dynamically.

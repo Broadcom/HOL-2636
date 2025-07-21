@@ -1,35 +1,27 @@
 apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: Package
 metadata:
-  name: harbor.tanzu.vmware.com.2.11.2+vmware.1-tkg.2
+  name: harbor.tanzu.vmware.com.2.13.1+vmware.1-vks.1
 spec:
   licenses:
-  - "VMware\u2019s End User License Agreement (Underlying OSS license: Apache License\
-    \ 2.0)"
+  - 'VMware''s End User License Agreement (Underlying OSS license: Apache License
+    2.0)'
   refName: harbor.tanzu.vmware.com
-  releaseNotes: harbor 2.11.2 https://github.com/goharbor/harbor/releases/tag/v2.11.2
-  releasedAt: '2025-03-13T14:30:00Z'
+  releaseNotes: harbor 2.13.1 https://github.com/goharbor/harbor/releases/tag/v2.13.1
+  releasedAt: '2025-05-27T15:30:00Z'
   template:
     spec:
       deploy:
       - kapp:
           rawOptions:
-          - --wait-timeout=2m
+          - --wait-timeout=5m
           - --kube-api-qps=20
           - --kube-api-burst=30
       fetch:
       - imgpkgBundle:
-          image: projects.packages.broadcom.com/vsphere/supervisor/packages/2025.3.21/vks-standard-packages@sha256:1fc36189e81ce38a30f5639bacfe7aa80b898b17c4f90094e57b79af45696ae2
+          image: projects.packages.broadcom.com/vsphere/supervisor/packages/2025.6.17/vks-standard-packages@sha256:5198182821d3a461d5327dfc246177b6018ce4bcf9972ab0c4c231dd89cf6bcc
       template:
       - ytt:
-          ignoreUnknownComments: true
-          inline:
-            paths:
-              config/networkpolicy.yaml: "#@ load(\"@ytt:data\", \"data\")\n---\n\
-                apiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n\
-                \  name: harbor-app-network-policy\n  namespace: #@ data.values.namespace\n\
-                spec:\n  podSelector:\n    matchLabels:\n      app: harbor\n  ingress:\n\
-                \    - {}\n"
           paths:
           - config/
       - kbld:
@@ -87,6 +79,11 @@ spec:
           - secret
           - xsrfKey
           type: object
+        createNetworkPolicy:
+          default: false
+          description: Create a networkpolicy in Harbor's namespace when it's true.  This
+            is required to be true for Harbor Supervisor Service
+          type: boolean
         database:
           description: Database component related configuration.
           properties:
@@ -764,6 +761,9 @@ spec:
                 Ingress Controller.
               type: integer
           type: object
+        priorityClassName:
+          description: The priority class name for all harbor pods
+          type: string
         proxy:
           description: The proxy related configuration.
           properties:
@@ -998,8 +998,8 @@ spec:
       required:
       - harborAdminPassword
       - secretKey
-      title: harbor.tanzu.vmware.com.2.11.2 values schema
-  version: 2.11.2+vmware.1-tkg.2
+      title: harbor.tanzu.vmware.com.2.13.1 values schema
+  version: 2.13.1+vmware.1-vks.1
 ---
 apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: PackageMetadata
