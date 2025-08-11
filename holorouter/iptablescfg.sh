@@ -124,7 +124,7 @@ iptables -A FORWARD -s 10.0.0.0/8 -d 10.0.0.0/8         -j ACCEPT
 ### LAB-SPECIFIC RULES
 
 # (add your rules here)
-iptables -A FORWARD -s 10.10.0.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -s 10.1.0.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
 
 ### END RULES
 
