@@ -71,9 +71,9 @@ for vm in supvms:
     verify_nic_connected (vm, False) # if not connected, disconnet then reconnect
 
 ## Restart Supervisor Webhooks to make sure certificate is valid/renewed
-if lsf.LMC and lsf.labtype == 'HOL':
-    lsf.write_output(f'Restarting Supervisor Webhooks')
-    lsf.run_command("/home/holuser/hol/Tools/restart_k8s_webhooks.sh")
+# if lsf.LMC and lsf.labtype == 'HOL':
+#     lsf.write_output(f'Restarting Supervisor Webhooks')
+#     lsf.run_command("/home/holuser/hol/Tools/restart_k8s_webhooks.sh")
 
 # Wizardry to deploy Tanzu
 
