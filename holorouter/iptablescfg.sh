@@ -125,6 +125,7 @@ iptables -A FORWARD -s 10.0.0.0/8 -d 10.0.0.0/8         -j ACCEPT
 
 # (add your rules here)
 iptables -A FORWARD -s 10.1.0.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -s 10.1.1.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -s 10.1.0.0/24 -m tcp -p tcp --dport 80 -j ACCEPT
 iptables -A FORWARD -m iprange --src-range 10.1.1.85-10.1.1.89 -m tcp -p tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -m iprange --src-range 10.1.1.85-10.1.1.89 -m tcp -p tcp --dport 80 -j ACCEPT
