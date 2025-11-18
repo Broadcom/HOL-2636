@@ -124,7 +124,17 @@ iptables -A FORWARD -s 10.0.0.0/8 -d 10.0.0.0/8         -j ACCEPT
 ### LAB-SPECIFIC RULES
 
 # (add your rules here)
+
+# Allow access to Broadcom package repository
+#This new rule automatically resolves the domain name projects.packages.broadcom.com to its current IP addresses and adds a corresponding iptables ACCEPT rule for each IP address in the FORWARD chain.
+for ip in $(dig +short projects.packages.broadcom.com | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b")
+do
+  iptables -A FORWARD -d $ip -j ACCEPT
+done
+
 iptables -A FORWARD -s 10.1.0.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -s 10.1.1.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -s 10.1.1.0/24 -m tcp -p tcp --dport 80 -j ACCEPT
 iptables -A FORWARD -s 10.1.0.0/24 -m tcp -p tcp --dport 80 -j ACCEPT
 iptables -A FORWARD -m iprange --src-range 10.1.1.85-10.1.1.89 -m tcp -p tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -m iprange --src-range 10.1.1.85-10.1.1.89 -m tcp -p tcp --dport 80 -j ACCEPT
@@ -135,4 +145,4 @@ iptables -A FORWARD -m iprange --src-range 10.1.1.85-10.1.1.89 -m tcp -p tcp --d
 iptables -P FORWARD DROP
 
 # indicate that iptables has run
-> ~holuser/firewall
+true > ~holuser/firewall
